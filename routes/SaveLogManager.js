@@ -28,7 +28,7 @@ function getSaveFile(params){
     var temp = util.format("%s/%s/%s/%s/ea_data_%s/",
         params['dir'],params['appid'],year,month, day);
     var filepath= constants.APP_ROOT + '/' + temp;
-    console.info("filePath : " + filepath)
+
     return [filepath,index+".log"];
 }
 
@@ -37,8 +37,6 @@ function getSaveFile(params){
  * read from json and assign base log and store log
  */
 function writeLog(req){
-    console.info("writeLog ");
-    console.log(req.param('appid'));
     var logContainer=new LogContainer(req);
     logContainer.parseLog();
     var ret = writeLogFromLogContainer(logContainer);
@@ -52,7 +50,6 @@ function writeLog(req){
 }
 
 function writeLogFromLogContainer(logContainer){
-    console.info("writeLogFromLogContainer ");
     var file_params = {};
     file_params['appid'] = logContainer.getAppid();
     file_params['dir'] = 'site_data';
@@ -89,7 +86,5 @@ function writeLogFromLogContainer(logContainer){
  * save the log
  */
 exports.saveLog = function(req){
-    console.info("saveLog ");
-    console.log(req.param('appid'));
     return writeLog(req);
 }
