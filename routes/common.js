@@ -12,6 +12,11 @@ exports.ip2long = function(ipstr) {
     return ip;
 };
 
+exports.getRealIP = function(req){
+    var proxy_ip=req.headers['x-real-ip'] || req.headers['x-forwarded-for'];
+    return proxy_ip ? proxy_ip : req.ip;
+}
+
 var appid_map= {
 	'rome0@elex337_pt_1':'rome0@337_pt_1',
 	'rome0@orkupt_pt_2':'rome0@elex337_pt_2',
