@@ -10,6 +10,7 @@ exports.sendLog = function(req,res){
         var msg = saveLogManager.saveLog(req);
         console.log(msg);
         manager.leave(req,res,"php",msg);
+        console.timeEnd('send-log');
     } catch (err) {
         manager.leave(req,res,"error",err.message)
         console.error(err);
