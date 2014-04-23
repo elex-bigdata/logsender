@@ -3,8 +3,6 @@ function LogManager(time){
 	var ea_start_time = time;
 
 	function logEnter(req){
-        console.log(req.param('appid'));
-        console.log(req.param('uid'));
 		if(typeof req.param('appid') == "undefined" || req.param('appid')=="") throw new Error("appid is not set");
 		if(typeof req.param('uid') == "undefined" ||  req.param('uid')=="" ) throw new Error("uid is not set");
 	}
@@ -40,6 +38,7 @@ function LogManager(time){
 	}
 	function logLeave(req,res,type,msg){
 		var re = buildJson(type,msg);
+        console.info(re);
 		type=changeType(req,type);
 		/**
 		 * 不同的返回类型，对应不同的客户端请求的情况。
@@ -75,11 +74,11 @@ function LogManager(time){
 	 * use for appid map and check params
 	 */
 	this.enter = function(req,resp){
-		console.log("LogManager enter");
+		//console.log("LogManager enter");
         logEnter(req);
 	}
 	this.leave = function(req,resp,type,msg){
-		console.log("LogManager leave");
+		//console.log("LogManager leave");
 		logLeave(req,resp,type,msg);
 	}
 
