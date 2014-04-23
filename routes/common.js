@@ -50,13 +50,10 @@ exports.checkV3 = function(appid) {
 }
 
 exports.ea_write_log = function(dir,file,msg){
-    console.info("dir : " + dir)
-    console.info("file : " + file)
     mkdirp(dir,function(err){
         if(err){
             throw new Error(err)
         }
-        console.info("write msg to " + msg)
         var log = fs.createWriteStream(dir + file, {'flags': 'a'});
         log.end(msg);
     })
