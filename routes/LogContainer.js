@@ -172,6 +172,7 @@ function LogContainer(req){
 			}
 			return;
 		}
+
 		if(constants.BASE_EVENT[event]){
 
 			//pay add the gross gcurrency
@@ -193,8 +194,9 @@ function LogContainer(req){
                 visitRecord["uid"]= this.uid;
 				visitRecord["timestamp"]= nowtime;
                 this.visitMsg.push(visitRecord);
-				var ip = common.ip2long(req.ip);
-                console.info("ip : " + req.ip );
+                var realIp = common.getRealIP(req);
+				var ip = common.ip2long(realIp);
+                console.info("ip : " + realIp );
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"' + ip + '"}',nowtime));
 			}
@@ -215,8 +217,9 @@ function LogContainer(req){
 				this.stats.push(newlog);
 
 			if(newlog['data'][0] == "visit" || (newlog['data'][0] == "xa" && newlog['data'][1] == "geoip" )){
-				console.info("ip : " + req.ip )
-                ip = common.ip2long(req.ip);
+                var realIp = common.getRealIP(req);
+                var ip = common.ip2long(realIp);
+                console.info("ip : " + realIp );
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"'+ip+'"}',nowtime));
 			}
