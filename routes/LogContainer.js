@@ -48,7 +48,6 @@ function to_millisec(timestamp){
 }
 
 function LogContainer(req){
-    console.log("LogContainer");
     this.req = req;
 	this.baseMsg = [];
 	this.visitMsg = [];
@@ -63,7 +62,6 @@ function LogContainer(req){
 
 
 	this.parseLog = function(){
-        console.info("parseLog")
         this.appid = req.param('appid');
         if(this.appid.indexOf("hayday")===0){
             this.appid = "happyfarm@elex337_en_1.0";
@@ -100,7 +98,6 @@ function LogContainer(req){
 
 	}
     this.addUpdate = function(triple){
-        console.info("addUpdate")
 		var t = triple.split(",",2);
 		var property=t[0];
 		var val=t[1];
@@ -131,17 +128,14 @@ function LogContainer(req){
 		//get timestamp
         var nowtime = "";
 		if(this.abs_time){// abs_time superb
-            console.info("abs_time")
 			nowtime = this.abs_time;
 		}else if(timestamp != 0 && timestamp != null){
-            console.info("timestamp != 0")
 			if(this.send_time != 0){ // ?timestamp=xxx&action=a,,yyy
 				nowtime = Date.now() - (this.send_time-timestamp);
 			}else{//	?action=a,,xxx
 				nowtime = timestamp;
 			}
 		}else{
-            console.info("else")
 			if(this.send_time != 0){	// ?timestamp=xxx&action=a
 				nowtime = this.send_time;
 			}else{	// ?action=a
@@ -152,7 +146,6 @@ function LogContainer(req){
 	}
 
 	this.addAction = function(triple){
-        console.info("addAction")
 		var t = triple.split(",");
 		var event = t[0];
 		var value = t[1];
@@ -161,9 +154,7 @@ function LogContainer(req){
 		if(timestamp != 0){
 			timestamp = to_millisec(timestamp);
 		}
-        console.info("timestamp : " + timestamp)
 		var nowtime = this.getLogTime(timestamp);
-        console.info("nowtime : " + nowtime)
 		//第四个参数，days
         var days = 1;
 		if(t.length >=4){
@@ -194,7 +185,6 @@ function LogContainer(req){
             var json_var = "";
 			if(json_var.length !=0)
                 json_var = JSON.stringify(json_v);
-            console.info("json_var:" + json_var)
 			//add ref field for ad system
 			if(constants.BASE_EVENT[event] !="user.visit"){
 				this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,constants.BASE_EVENT[event],json_var,nowtime));
@@ -204,6 +194,7 @@ function LogContainer(req){
 				visitRecord["timestamp"]= nowtime;
                 this.visitMsg.push(visitRecord);
 				var ip = common.ip2long(req.ip);
+                console.info("ip : " + req.ip );
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"' + ip + '"}',nowtime));
 			}
@@ -219,7 +210,6 @@ function LogContainer(req){
 			}
 			newlog['data'][6] = parseInt(value) || 0;
 			newlog['statfunction']='count';
-            console.info("stats : " + this.stats )
 			// 丢弃xa.geoip
 			if(newlog['data'][0] != "xa" || newlog['data'][1] != "geoip")
 				this.stats.push(newlog);
@@ -246,9 +236,6 @@ function LogContainer(req){
 
 	this.getBaseLog = function(logNum,updateNum){
 		var re= "";
-        console.info("getBaseLog")
-        console.info(this.visitMsg)
-        console.info(this.baseMsg)
         for(var i=0;i<this.visitMsg.length;i++){
 			var msg= util.format("%s\t%s\t%s\t%s\t%s\t%s\n", this.appid,this.visitMsg[i]['uid'],this.ref,"user.visit","",this.visitMsg[i]['timestamp']);
 			re = re + msg;
@@ -275,7 +262,6 @@ function LogContainer(req){
 		return this.appid;
 	}
 	this.setAppid = function(appid){
-        console.info("set appid")
 		this.appid=appid;
 	}
 	this.getUid = function(){
