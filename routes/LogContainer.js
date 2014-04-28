@@ -2,51 +2,6 @@ var util = require('util');
 var common = require('./common');
 var constants = require("./constants");
 
-function gdpUidHook(uid){
-	if(uid.length != 32){
-		return uid;
-	}
-    var matches = /^0*(FB|AA)(\d+)$/.exec(uid);
-	if(matches){
-		var pf = matches[1];
-		var id = matches[2];
-
-		switch (pf){
-			case 'FB':
-				return id;
-			case 'AA':
-				return id;
-			default:
-				return uid;
-		}
-	}else{
-		return uid;
-	}
-}
-
-
-/**
- * 将一个timestamp标准化为13位的毫秒timestamp
- * @param number $timestamp 输入的timestamp
- * @return number 输出的timestamp，或者null
- */
-function to_millisec(timestamp){
-	if(timestamp == null){
-		return null;
-	}
-	var length=timestamp.length;
-	if(length==10){
-		timestamp = parseInt(timestamp + "000");
-	}
-	else if(length==13){
-		timestamp = parseInt(timestamp);
-	}
-	else {
-		timestamp = Date.now();
-	}
-	return timestamp;
-}
-
 function LogContainer(req){
     this.req = req;
 	this.baseMsg = [];
@@ -73,7 +28,7 @@ function LogContainer(req){
 
 		//add gdp hook
 
-		this.uid= gdpUidHook(req.param('uid'));
+		this.uid= common.gdpUidHook(req.param('uid'));
 
 		if(req.query.timestamp){
 			this.send_time = req.query.timestamp;
@@ -85,8 +40,8 @@ function LogContainer(req){
 		}else{
 			this.abs_time = null;
 		}
-		this.abs_time = to_millisec(this.abs_time);
-		this.send_time = to_millisec(this.send_time);
+		this.abs_time = common.to_millisec(this.abs_time);
+		this.send_time = common.to_millisec(this.send_time);
 
         for(var key in req.query){
             if(key.indexOf("action") ===0){
@@ -152,7 +107,7 @@ function LogContainer(req){
 		var timestamp = t[2];
 		//normalize time representation
 		if(timestamp != 0){
-			timestamp = to_millisec(timestamp);
+			timestamp = common.to_millisec(timestamp);
 		}
 		var nowtime = this.getLogTime(timestamp);
 		//第四个参数，days
@@ -165,7 +120,7 @@ function LogContainer(req){
 			value = parseInt(t[1]);
 			var day_value = parseInt(value / days);
 			var first_day_value = day_value + parseInt(value % days);
-			addAction(event +"," + first_day_value +"," +nowtime);
+			this.addAction(event +"," + first_day_value +"," +nowtime);
 			for(var i=1; i<days; i++){
 				nowtime += 86400000;
 				addAction(event+","+ day_value+","+nowtime);
@@ -227,8 +182,6 @@ function LogContainer(req){
 	}
 
 	this.getUpdateLog = function(re,updateNum){
-        console.info("getUpdateLog")
-        console.info(this.update)
 		updateNum = updateNum +  Object.getOwnPropertyNames(this.update).length;
 		if(updateNum != 0){
 			re = re + util.format("%s\t%s\t%s\t%s\t%s\t%s",this.appid,this.uid,"","user.update",JSON.stringify(this.update),Date.now()) +"\n";
