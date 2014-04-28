@@ -59,10 +59,15 @@ exports.ea_write_log = function(dir,file,msg){
         if(err){
             throw new Error(err)
         }
-
-        var log = fs.createWriteStream(dir + file, {'flags': 'a'});
+        //var log = fs.createWriteStream(dir + file, {'flags': 'a'});
         console.info(msg);
-        log.end(msg);
+        //log.end(msg);
+        fs.appendFile(dir + file, msg, function (err) {
+            if (err) {
+                console.info("Log to file fail " + err);
+                throw err;
+            }
+        });
     })
 }
 
