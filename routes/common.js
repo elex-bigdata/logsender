@@ -47,10 +47,9 @@ exports.match = function(appid){
 
 exports.checkV3 = function(appid) {
     if(constants.WHITE_MAP[appid] == 1) return true;
-    else if(appid.substr(0,11)=="xingyuntest") return true;
     else if(/(^[a-zA-Z0-9])([a-zA-Z0-9_.\-@]*$)/.test(appid)){
         return true;
-    }
+    }else if(appid.substr(0,11)=="xingyuntest") return true;
     else return false;
 }
 
@@ -59,15 +58,9 @@ exports.ea_write_log = function(dir,file,msg){
         if(err){
             throw new Error(err)
         }
-        //var log = fs.createWriteStream(dir + file, {'flags': 'a'});
+        var log = fs.createWriteStream(dir + file, {'flags': 'a'});
         console.info(msg);
-        //log.end(msg);
-        fs.appendFile(dir + file, msg, function (err) {
-            if (err) {
-                console.info("Log to file fail " + err);
-                throw err;
-            }
-        });
+        log.end(msg);
     })
 }
 
