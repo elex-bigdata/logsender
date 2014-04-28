@@ -59,7 +59,54 @@ exports.ea_write_log = function(dir,file,msg){
         if(err){
             throw new Error(err)
         }
+
         var log = fs.createWriteStream(dir + file, {'flags': 'a'});
+        console.info(msg);
         log.end(msg);
     })
+}
+
+exports.gdpUidHook = function(uid){
+    if(uid.length != 32){
+        return uid;
+    }
+    var matches = /^0*(FB|AA)(\d+)$/.exec(uid);
+    if(matches){
+        var pf = matches[1];
+        var id = matches[2];
+
+        switch (pf){
+            case 'FB':
+                return id;
+            case 'AA':
+                return id;
+            default:
+                return uid;
+        }
+    }else{
+        return uid;
+    }
+}
+
+
+/**
+ * 将一个timestamp标准化为13位的毫秒timestamp
+ * @param number $timestamp 输入的timestamp
+ * @return number 输出的timestamp，或者null
+ */
+exports.to_millisec = function(timestamp){
+    if(timestamp == null){
+        return null;
+    }
+    var length=timestamp.length;
+    if(length==10){
+        timestamp = parseInt(timestamp + "000");
+    }
+    else if(length==13){
+        timestamp = parseInt(timestamp);
+    }
+    else {
+        timestamp = Date.now();
+    }
+    return timestamp;
 }
