@@ -1,6 +1,8 @@
 var saveLogManager = require("./SaveLogManager")
+var cluster = require('cluster');
 
 exports.sendLog = function(req,res){
+    console.info("work id : " + cluster.worker.id)
     console.time('send-log');
     var ea_start_time = Date.now();
     try {
