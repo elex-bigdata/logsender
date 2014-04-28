@@ -85,6 +85,6 @@ var base_event = {
     'quit':"user.quit",
     'update':"user.update"};
 
-define("APP_ROOT","d:/work/sender")
+define("APP_ROOT","/home/hadoop/liqiang")
 define("WHITE_MAP",white_map)
 define("BASE_EVENT",base_event)
