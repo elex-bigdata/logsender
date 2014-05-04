@@ -182,9 +182,9 @@ function LogContainer(req){
 	}
 
 	this.getUpdateLog = function(re,updateNum){
-		updateNum = updateNum +  Object.getOwnPropertyNames(this.update).length;
+		updateNum +=  Object.getOwnPropertyNames(this.update).length;
 		if(updateNum != 0){
-			re = re + util.format("%s\t%s\t%s\t%s\t%s\t%s",this.appid,this.uid,"","user.update",JSON.stringify(this.update),Date.now()) +"\n";
+			re += util.format("%s\t%s\t%s\t%s\t%s\t%s",this.appid,this.uid,"","user.update",JSON.stringify(this.update),Date.now()) +"\n";
 		}
 
         return new Array(re,updateNum);
@@ -194,11 +194,11 @@ function LogContainer(req){
 		var re= "";
         for(var i=0;i<this.visitMsg.length;i++){
 			var msg= util.format("%s\t%s\t%s\t%s\t%s\t%s\n", this.appid,this.visitMsg[i]['uid'],this.ref,"user.visit","",this.visitMsg[i]['timestamp']);
-			re = re + msg;
+			re += msg;
 			logNum++;
 		}
         for(var i in this.baseMsg){
-            re = re + this.appid + "\t" + this.baseMsg[i] + "\n";
+            re += this.appid + "\t" + this.baseMsg[i] + "\n";
             logNum++;
         }
 		var upresult = this.getUpdateLog(re,updateNum);
@@ -211,7 +211,7 @@ function LogContainer(req){
 		log['signedParams']['appid']= common.match(this.appid);
 		log['signedParams']['uid']=this.uid;
 		log['stats']= this.stats;
-		logNum = logNum + this.stats.length;
+		logNum += this.stats.length;
 		return new Array(JSON.stringify(log) + "\n",logNum);
 	}
 	this.getAppid = function(){
