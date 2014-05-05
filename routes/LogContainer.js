@@ -184,7 +184,7 @@ function LogContainer(req){
 	this.getUpdateLog = function(re,updateNum){
 		updateNum +=  Object.getOwnPropertyNames(this.update).length;
 		if(updateNum != 0){
-			re += util.format("%s\t%s\t%s\t%s\t%s\t%s",this.appid,this.uid,"","user.update",JSON.stringify(this.update),Date.now()) +"\n";
+			re += util.format("%s\t%s\t%s\t%s\t%s\t%s",this.appid,this.uid,"","user.update",JSON.stringify(this.update),Math.floor(Date.now()/1000)) +"\n";
 		}
 
         return new Array(re,updateNum);
@@ -205,7 +205,7 @@ function LogContainer(req){
 		return new Array(upresult[0],logNum,upresult[1]);
 	}
 	this.getStoreLog = function(logNum){
-		if(this.stats==null) return null;
+		if(this.stats.length==0) return null;
         var log = {};
         log['signedParams'] = {};
 		log['signedParams']['appid']= common.match(this.appid);
