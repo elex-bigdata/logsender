@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 app.get('/', routes.index);
-app.get('/v4/:appid/:uid', logSend.sendLog);
+app.get('/v5/:appid/:uid', logSend.sendLog);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
