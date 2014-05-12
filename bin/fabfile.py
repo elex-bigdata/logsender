@@ -10,6 +10,7 @@ def start():
 	run("pm2 start /home/hadoop/xa/logsender/bin/www -i max")
 
 def restart():
-	run("pm2 dump")
-	run("pm2 kill")
-	run("pm2 resurect")
+	run("pm2 restart www")
+
+def stop():
+	run("pm2 stop www")
