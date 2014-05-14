@@ -16,14 +16,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(favicon());
-app.use(logger('dev'));
+app.use(logger('prod'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-app.get('/', routes.index);
 app.get('/v5/:appid/:uid', logSend.sendLog);
 
 /// catch 404 and forwarding to error handler
