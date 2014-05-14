@@ -150,6 +150,7 @@ function LogContainer(req){
 				visitRecord["timestamp"]= nowtime;
                 this.visitMsg.push(visitRecord);
                 var realIp = common.getRealIP(req);
+                console.info(realIp);
 				var ip = common.ip2long(realIp);
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"' + ip + '"}',nowtime));
@@ -172,6 +173,7 @@ function LogContainer(req){
 
 			if(newlog['data'][0] == "visit" || (newlog['data'][0] == "xa" && newlog['data'][1] == "geoip" )){
                 var realIp = common.getRealIP(req);
+                console.info(realIp);
                 var ip = common.ip2long(realIp);
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"'+ip+'"}',nowtime));
