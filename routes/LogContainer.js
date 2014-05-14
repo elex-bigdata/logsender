@@ -151,7 +151,6 @@ function LogContainer(req){
                 this.visitMsg.push(visitRecord);
                 var realIp = common.getRealIP(req);
 				var ip = common.ip2long(realIp);
-                console.info("ip : " + realIp );
 				if(ip != false)
 					this.baseMsg.push(util.format("%s\t%s\t%s\t%s\t%s",this.uid,this.ref,"user.update",'{"geoip":"' + ip + '"}',nowtime));
 			}

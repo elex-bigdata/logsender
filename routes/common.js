@@ -59,7 +59,6 @@ exports.ea_write_log = function(dir,file,msg){
             throw new Error(err)
         }
         var log = fs.createWriteStream(dir + file, {'flags': 'a'});
-        console.info(msg);
         log.end(msg);
     })
 }
