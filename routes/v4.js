@@ -2,13 +2,12 @@ var saveLogManager = require("./SaveLogManager")
 var cluster = require('cluster');
 
 exports.sendLog = function(req,res){
-    console.info("work id : " + cluster.worker.id)
     console.time('send-log');
     var ea_start_time = Date.now();
     try {
         enter(req,res);
         var msg = saveLogManager.saveLog(req);
-        console.log(msg);
+        //console.log(msg);
         leave(req,res,"php",msg,ea_start_time);
         console.timeEnd('send-log');
     } catch (err) {
