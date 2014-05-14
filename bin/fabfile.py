@@ -14,3 +14,6 @@ def restart():
 
 def stop():
 	run("sudo pm2 stop www")
+
+def kill():
+	run("sudo pm2 kill")
