@@ -1,5 +1,4 @@
 var saveLogManager = require("./SaveLogManager")
-var cluster = require('cluster');
 
 exports.sendLog = function(req,res){
     console.time('send-log');
@@ -11,9 +10,9 @@ exports.sendLog = function(req,res){
         leave(req,res,"php",msg,ea_start_time);
         console.timeEnd('send-log');
     } catch (err) {
-        leave(req,res,"error",err.message,ea_start_time)
+        leave(req,res,"error",err.message,ea_start_time);
+        console.error(req.url);
         console.error(err);
-        console.timeEnd('send-log');
     }
 }
 

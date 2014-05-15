@@ -25,12 +25,17 @@ app.use(app.router);
 
 app.get('/v5/:appid/:uid', logSend.sendLog);
 
-/// catch 404 and forwarding to error handler
+app.use(function(req, res) {
+    console.info(req.url);
+    res.send('{"stats":"error","time":"0 ms","message":"request is illegal"}', 404);
+});
+
+/*/// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
-});
+});*/
 
 /// error handlers
 
