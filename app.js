@@ -26,7 +26,7 @@ app.use(app.router);
 app.get('/v5/:appid/:uid', logSend.sendLog);
 
 app.use(function(req, res) {
-    console.info(req.url);
+    console.info("illegal request : " + req.url);
     res.send('{"stats":"error","time":"0 ms","message":"request is illegal"}', 404);
 });
 
