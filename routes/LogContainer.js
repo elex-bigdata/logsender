@@ -47,7 +47,13 @@ function LogContainer(req){
             if(key.indexOf("action") ===0){
                 this.addAction(req.query[key])
             }else if(key.indexOf("update") ===0){
-                this.addUpdate(req.query[key])
+                if(req.query[key].length > 1){
+                    for(var q  in req.query[key]){
+                        this.addUpdate(req.query[key][q]);
+                    }
+                }else{
+                    this.addUpdate(req.query[key]);
+                }
             }
         }
 
