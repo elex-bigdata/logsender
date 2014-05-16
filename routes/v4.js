@@ -11,8 +11,8 @@ exports.sendLog = function(req,res){
         console.timeEnd('send-log');
     } catch (err) {
         leave(req,res,"error",err.message,ea_start_time);
-        console.error(req.url);
-        console.error(err);
+        console.error(err +" : "+req.url);
+        console.timeEnd('send-log');
     }
 }
 
@@ -53,7 +53,7 @@ function changeType(req,type){
 }
 function logLeave(req,res,type,msg,ea_start_time){
     var re = buildJson(type,msg,ea_start_time);
-    console.info(re);
+    //console.info(re);
     type=changeType(req,type);
     /**
      * 不同的返回类型，对应不同的客户端请求的情况。

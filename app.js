@@ -16,17 +16,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(favicon());
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-app.get('/v5/:appid/:uid', logSend.sendLog);
+app.get('/v4/:appid/:uid', logSend.sendLog);
 
 app.use(function(req, res) {
     console.info("illegal request : " + req.url);
+    logger("illegal request : " + req.url);
     res.send('{"stats":"error","time":"0 ms","message":"request is illegal"}', 404);
 });
 
