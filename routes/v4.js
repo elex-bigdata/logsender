@@ -1,4 +1,6 @@
 var saveLogManager = require("./SaveLogManager")
+var common = require('./common');
+var logger = require('morgan');
 
 exports.sendLog = function(req,res){
     console.time('send-log');
@@ -13,6 +15,7 @@ exports.sendLog = function(req,res){
         leave(req,res,"error",err.message,ea_start_time);
         console.error(err +" : "+req.url);
         console.timeEnd('send-log');
+        logger(err +" : {'url':'"+req.url+"','ip':" + common.getRealIP(req) +"}");
     }
 }
 
