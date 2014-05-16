@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 //app.get('/v4/:appid/:uid', logSend.sendLog);
-app.get('/v5/:appid/:uid', index.index);
+app.get('/v4/:appid/:uid', index.index);
 
 app.use(function(req, res) {
     console.info("illegal request : " + req.url);
