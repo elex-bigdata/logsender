@@ -2,6 +2,7 @@ var common = require('./common');
 var LogContainer = require('./LogContainer');
 var util = require('util');
 var constants = require("./constants");
+var async = require('async');
 
 
 /*
@@ -65,7 +66,7 @@ function writeLogFromLogContainer(logContainer){
 
     if(msg!=null){
         var log_file = getSaveFile(file_params);
-        common.ea_write_log(log_file[0],log_file[1],msg);
+        async.parallel([common.ea_write_log(log_file[0],log_file[1],msg)]);
     }
     file_params['dir']='store_log';
 
@@ -78,7 +79,7 @@ function writeLogFromLogContainer(logContainer){
     }
     if(msg!=null){
         var log_file = getSaveFile(file_params);
-        common.ea_write_log(log_file[0],log_file[1],msg);
+        async.parallel([common.ea_write_log(log_file[0],log_file[1],msg)]);
     }
     return "store " + logNum + " action and " + updateNum + " update ";
 }
