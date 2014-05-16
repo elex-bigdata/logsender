@@ -23,22 +23,30 @@ function rewrite(options){
     console.log("rewrite");
     var req = http.request(options, function(res) {
         res.setEncoding('utf8');
-        res.on('data', function (data) {
-            console.log('>>> ', data);
-        });
+        if (res.statusCode == 200) {
+            res.on('data', function (data) {
+                console.log('>>> ', data);
+            });
+        }else{
+            logerror(res.statusCode,options.path);
+        }
     });
 
     req.on('error', function(e){
-        console.log("error: " + e.message);
-        var dir = "/data/log/payproxy";
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        month = (month < 10 ? "0" : "") + month;
-        var day  = date.getDate();
-        day = (day < 10 ? "0" : "") + day;
-        var filename = util.format("%s_%s_%s",year,month, day);
-        common.ea_write_log(dir,filename + ".log",options.path);
+        logerror(e.msg,options.path);
     });
     req.end();
+}
+
+function logerror(msg,url){
+    console.log("error: " + msg);
+    var dir = "/data/log/payproxy/";
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+    var filename = util.format("%s_%s_%s",year,month, day);
+    common.ea_write_log(dir,filename + ".log",url);
 }
