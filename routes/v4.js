@@ -12,7 +12,7 @@ exports.sendLog = function(req,res){
         leave(req,res,"php",msg,ea_start_time);
         console.timeEnd('send-log');
     } catch (err) {
-        common.ea_write_log("/data/log/","nodejs.log","{'url':'"+req.url+"','ip':" + common.getRealIP(req) +",'timestamp': "+ea_start_time+"}");
+        common.ea_write_log("/data/log/","nodejs.log","{'url':'"+req.url+"','ip':" + common.getRealIP(req) +",'timestamp': "+ea_start_time+"}\n");
         console.error(err +" : "+req.url);
         leave(req,res,"error",err.message,ea_start_time);
         console.timeEnd('send-log');
