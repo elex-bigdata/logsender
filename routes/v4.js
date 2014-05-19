@@ -3,7 +3,8 @@ var common = require('./common');
 var logger = require('morgan');
 
 exports.sendLog = function(req,res){
-    console.time('send-log');
+    res.send("ok");
+    /*console.time('send-log');
     var ea_start_time = Date.now();
     try {
         enter(req,res);
@@ -16,7 +17,7 @@ exports.sendLog = function(req,res){
         console.error(err +" : "+req.url);
         leave(req,res,"error",err.message,ea_start_time);
         console.timeEnd('send-log');
-    }
+    }*/
 }
 
 
