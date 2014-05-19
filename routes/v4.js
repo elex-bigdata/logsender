@@ -9,8 +9,8 @@ exports.sendLog = function(req,res){
         enter(req,res);
         var msg = saveLogManager.saveLog(req);
         //console.log(msg);
-        leave(req,res,"php",msg,ea_start_time);
         console.timeEnd('send-log');
+        leave(req,res,"php",msg,ea_start_time);
     } catch (err) {
         common.ea_write_log("/data/log/","nodejs.log","{'url':'"+req.url+"','ip':" + common.getRealIP(req) +",'timestamp': "+ea_start_time+"}\n");
         console.error(err +" : "+req.url);

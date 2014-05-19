@@ -85,6 +85,6 @@ var base_event = {
     'quit':"user.quit",
     'update':"user.update"};
 
-define("APP_ROOT","/data/htdocs/elex_analytics")
+define("APP_ROOT","/home/hadoop/liqiang/elex_analytics")
 define("WHITE_MAP",white_map)
 define("BASE_EVENT",base_event)

@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes');
+var index = require('./routes/index');
 var logSend = require('./routes/v4');
 
 var app = express();
@@ -23,7 +24,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-app.get('/v4/:appid/:uid', logSend.sendLog);
+app.get('/',index.index);
+app.get('/v5/:appid/:uid', logSend.sendLog);
 
 app.use(function(req, res) {
     console.info("illegal request : " + req.url);
